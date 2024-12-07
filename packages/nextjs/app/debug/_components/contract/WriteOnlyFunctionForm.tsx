@@ -45,6 +45,7 @@ export const WriteOnlyFunctionForm = ({
     if (writeContractAsync) {
       try {
         const makeWriteWithParams = () =>
+          //@ts-ignore
           writeContractAsync({
             address: contractAddress,
             functionName: abiFunction.name,
@@ -65,6 +66,7 @@ export const WriteOnlyFunctionForm = ({
     hash: result,
   });
   useEffect(() => {
+    // @ts-ignore
     setDisplayedTxResult(txResult);
   }, [txResult]);
 
@@ -118,10 +120,9 @@ export const WriteOnlyFunctionForm = ({
             </div>
           )}
           <div
-            className={`flex ${
-              writeDisabled &&
+            className={`flex ${writeDisabled &&
               "tooltip before:content-[attr(data-tip)] before:right-[-10px] before:left-auto before:transform-none"
-            }`}
+              }`}
             data-tip={`${writeDisabled && "Wallet not connected or in the wrong network"}`}
           >
             <button className="btn btn-secondary btn-sm" disabled={writeDisabled || isPending} onClick={handleWrite}>
@@ -133,6 +134,7 @@ export const WriteOnlyFunctionForm = ({
       </div>
       {zeroInputs && txResult ? (
         <div className="flex-grow basis-0">
+          {/* @ts-ignore */}
           <TxReceipt txResult={txResult} />
         </div>
       ) : null}

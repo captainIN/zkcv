@@ -51,6 +51,10 @@
     "tailwindcss": "~3.4.11",
     "type-fest": "~4.26.1",
     "typescript": "<5.6.0",
-    "vercel": "~37.4.2"
+    "vercel": "~37.4.2",
+    "@zk-email/sdk": "^0.0.70",
+    "axios": "^1.7.9",
+    "lucide-react": "^0.468.0",
+    "@anon-aadhaar/react": "^2.4.2"
   }
 }

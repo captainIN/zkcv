@@ -9,7 +9,7 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
-
+import "hardhat-dependency-compiler";
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
 const providerApiKey = process.env.ALCHEMY_API_KEY || "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
@@ -23,7 +23,7 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: "0.8.20",
+        version: "0.8.19",
         settings: {
           optimizer: {
             enabled: true,
@@ -33,6 +33,9 @@ const config: HardhatUserConfig = {
         },
       },
     ],
+  },
+  dependencyCompiler: {
+    paths: ["@anon-aadhaar/contracts/src/AnonAadhaar.sol"],
   },
   defaultNetwork: "localhost",
   namedAccounts: {
@@ -46,7 +49,7 @@ const config: HardhatUserConfig = {
     // If the network you are looking for is not here you can add new network settings
     hardhat: {
       forking: {
-        url: `https://polygonzkevm-cardona.g.alchemy.com/v2/${providerApiKey}`,
+        url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
     },
