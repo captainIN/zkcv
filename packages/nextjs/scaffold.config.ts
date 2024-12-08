@@ -1,3 +1,4 @@
+import { defineChain } from "viem";
 import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
@@ -10,7 +11,35 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: process.env.NEXT_PUBLIC_IS_LOCAL === "false" ? [chains.polygonZkEvmCardona] : [chains.hardhat],
+  targetNetworks:
+    process.env.NEXT_PUBLIC_IS_LOCAL === "false"
+      ? [
+          defineChain({
+            id: 2442,
+            name: "Polygon zkEVM Cardona",
+            nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+            rpcUrls: {
+              default: {
+                http: ["https://polygonzkevm-cardona.g.alchemy.com/v2/wwoxW-7q2uqK1pvAMYl37wksMH4HucbI"],
+              },
+            },
+            blockExplorers: {
+              default: {
+                name: "PolygonScan",
+                url: "https://cardona-zkevm.polygonscan.com",
+                apiUrl: "https://cardona-zkevm.polygonscan.com/api",
+              },
+            },
+            testnet: true,
+            contracts: {
+              multicall3: {
+                address: "0xca11bde05977b3631167028862be2a173976ca11",
+                blockCreated: 114091,
+              },
+            },
+          }),
+        ]
+      : [chains.hardhat],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

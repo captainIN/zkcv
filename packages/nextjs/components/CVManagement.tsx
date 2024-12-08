@@ -6,6 +6,8 @@ import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { Plus } from "lucide-react";
 import ExperienceCard from "./ExperienceCard";
 import abi from "~~/abi.json"
+import { polygonZkEvmCardona } from "viem/chains";
+import toast from "react-hot-toast";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 const ABI = abi;
@@ -72,12 +74,14 @@ const CVManagement = () => {
         const finalExperiences = [...experiences, currentExperience];
         try {
             const ipfsHash = await uploadToPinata(finalExperiences);
-            //@ts-ignore
+
             await writeContractAsync({
                 address: CONTRACT_ADDRESS as `0x${string}`,
                 abi: ABI,
                 functionName: "updateCV",
                 args: [ipfsHash],
+                chain: polygonZkEvmCardona,
+                account: address
             });
             setExperiences(finalExperiences);
             setCurrentExperience({
@@ -91,6 +95,16 @@ const CVManagement = () => {
             setIsFormOpen(false);
         } catch (error) {
             console.error("Error:", error);
+            toast.error(
+                <div style={{
+                    maxHeight: '150px',
+                    overflow: 'auto',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word'
+                }}>
+                    {JSON.stringify(error, null, 2)}
+                </div>
+            );
         }
     };
 
